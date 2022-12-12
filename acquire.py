@@ -7,7 +7,7 @@ from env import host, username, password
 def get_connection(db, user=username, host=host, password=password):
     return f'mysql+pymysql://{user}:{password}@{host}/{db}'
 
-def get_titanic_data(get_connection):
+def get_titanic_data():
     if os.path.isfile('titanic.csv'):
         return pd.read_csv('titanic.csv')
     else:
@@ -20,7 +20,7 @@ def get_titanic_data(get_connection):
         titanic.to_csv('titanic.csv')
         return titanic
 
-def get_iris_data(get_connection):   
+def get_iris_data():   
     if os.path.isfile('iris.csv'):
         return pd.read_csv('iris.csv')
     else:
@@ -34,7 +34,7 @@ def get_iris_data(get_connection):
         iris.to_csv('iris.csv')
         return iris
 
-def get_telco_data(get_connection):
+def get_telco_data():
     if os.path.isfile('telco.csv'):
         return pd.read_csv('telco.csv')
     else:
@@ -50,8 +50,3 @@ def get_telco_data(get_connection):
         telco.to_csv('telco.csv')
         return telco
     
-def split_train_test(df, col):
-    seed = 69
-    train, val_test = train_test_split(df, train_size=.7, random_state=seed, stratify=df[col])
-    validate, test = train_test_split(val_test, train_size=.5, random_state=seed, stratify=val_test[col])
-    return train, validate, test
