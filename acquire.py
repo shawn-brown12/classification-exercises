@@ -50,3 +50,18 @@ def get_telco_data():
         telco.to_csv('telco.csv')
         return telco
     
+#this will return the data from specifically the attendance table in the tidy data dataset
+def get_attendance_data():
+    if os.path.isfile('attendance.csv'):
+        return pd.read_csv('attendance.csv')
+    else:
+        url = get_connection('tidy_data')
+        query = '''
+                SELECT *
+                FROM attendance
+                '''
+        attendance = pd.read_sql(query, url)
+        attendance.to_csv('attendance.csv')
+        attendance.drop(columns='Unnamed: 0.1')
+        return attendance
+    
