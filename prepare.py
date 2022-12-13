@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 #function to turn a dataset into train, validate, and test subsets
 def split_train_test(df, col):
     
-    seed = 69
+    seed = 123
     train, val_test = train_test_split(df, train_size=.5, random_state=123, stratify=df[col])
     validate, test = train_test_split(val_test, train_size=.6, random_state=123, stratify=val_test[col])
     
@@ -18,15 +18,15 @@ def split_train_test(df, col):
 def prep_iris(df):
     to_drop = ['species_id', 'measurement_id', 'Unnamed: 0']
     df.drop(columns=to_drop, inplace=True)
-    df = df.rename(columns={'species_name':'name'})
+    df = df.rename(columns={'species_name':'species'})
     
-    dummies = pd.get_dummies(df[['name']], drop_first=True)
+    dummies = pd.get_dummies(df[['species']], drop_first=True)
     df = pd.concat([df, dummies], axis=1)
     return df
 
 #function to prepare the titanic dataset for use
 def prep_titanic(df):
-    to_drop = ['Unnamed: 0', 'class', 'embarked', 'passenger_id', 'deck']
+    to_drop = ['Unnamed: 0', 'class', 'embarked', 'passenger_id', 'deck', 'age']
     df.drop(columns=to_drop, inplace=True)
     
     dummies = pd.get_dummies(df[['sex', 'embark_town']], drop_first=True)
